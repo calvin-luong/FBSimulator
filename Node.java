@@ -33,6 +33,6 @@ public class Node {
 	
 	public void deleteNode()
 	{
-		person = new Person("DELETED");
+		person = new Person("DELETED", null);
 	}
 }

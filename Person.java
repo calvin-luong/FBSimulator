@@ -1,31 +1,22 @@
 package MicroVersionoFFacebook;
 
 public class Person {
-	private LinkedList friendsList;
+	private DivisionHashTable friendsList;
 	private String name;
 	private int k;
 	
 	public static void main (String args[])
 	{
-		Person calvin = new Person("calvin");
+		DivisionHashTable table = new DivisionHashTable();
+		Person calvin = new Person("calvin", table);
 		System.out.println(calvin.k);
 	}
 	
-	public Person(String name)
+	public Person(String name, DivisionHashTable friendsList)
 	{
 		this.name = name;
-		friendsList = new LinkedList();
+		this.friendsList = friendsList;
 		nameToInt();
-	}
-	
-	public void getFriends()
-	{
-		friendsList.print();
-	}
-	
-	public void addFriend(Person name)
-	{
-		friendsList.add(name);
 	}
 	
 	public String getName()
