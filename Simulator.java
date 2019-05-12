@@ -5,13 +5,16 @@ import java.util.Scanner;
 public class Simulator {
 
 	
+	
 	public static void main (String args[])
 	{
+		DivisionHashFunction divHashFunction = new DivisionHashFunction();
+		MultiplicationHashFunction multiHashFunction = new MultiplicationHashFunction();
+		Node divHashTable[] = new Node[13];
+		Node multiHashTable[] = new Node[13];
 		
 		Scanner scan = new Scanner(System.in);
 		String friend = "";
-
-		DivisionHashTable userTable = new DivisionHashTable();
 
 		while (!friend.equals("q"))
 		{
@@ -19,10 +22,12 @@ public class Simulator {
 			friend = scan.next();
 
 			Person p = new Person(friend, null);
-			userTable.chainedHashInsert(p);
+			divHashFunction.chainedHashInsert(divHashTable, p);
+			multiHashFunction.chainedHashInsert(multiHashTable, p);
 		}
 		
-		userTable.print();
+		divHashFunction.print(divHashTable);
+		multiHashFunction.print(multiHashTable);
 	}
 
 }
