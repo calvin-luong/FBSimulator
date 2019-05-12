@@ -37,4 +37,16 @@ public class Person {
 		
 		k = result;
 	}
+	
+	public void addFriend(Person p)
+	{
+		friendsList.insert(p);
+	}
+	
+	public void printFriendsList()
+	{
+		System.out.print(name + "'s friends: ");
+		friendsList.print();
+		System.out.println();
+	}
 }

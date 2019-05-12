@@ -48,15 +48,24 @@ public class LinkedList {
 
 		Node current = head;
 
-		while (current != null)
+		if (current.getPerson().getName().equals(n.getPerson().getName()))
 		{
-			if (current.getNext().getPerson().getName().equals(n.getPerson().getName()))
-			{
-				current.setNext(current.getNext().getNext());
-			}
-
-			current = current.getNext();
+			current = null;
 		}
+
+		else
+		{
+			while (current != null)
+			{
+				if (current.getNext().getPerson().getName().equals(n.getPerson().getName()))
+				{
+					current.setNext(current.getNext().getNext());
+				}
+
+				current = current.getNext();
+			}
+		}
+
 	}
 
 	public void print()
