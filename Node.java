@@ -30,9 +30,4 @@ public class Node {
 	{
 		this.person = name;
 	}
-	
-	public void deleteNode()
-	{
-		person = new Person("DELETED", null);
-	}
 }

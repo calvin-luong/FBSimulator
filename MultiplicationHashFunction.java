@@ -9,7 +9,7 @@ public class MultiplicationHashFunction {
 		return i;
 	}
 
-	public void chainedHashInsert(Node A[], Person name)
+	public void chainedHashAdd(Node A[], Person name)
 	{
 		Node person = new Node(name);
 
@@ -27,7 +27,95 @@ public class MultiplicationHashFunction {
 		}
 	}
 
-	public Person chainedHashSearch(Node A[], String name)
+	public void chainedHashInsert(Node A[], String name, String friend)
+	{
+		Person person = new Person(name, null);
+		Person targetFriend = new Person(friend, null);
+		
+		int i = hashCode(person);
+
+		Node current = A[i];
+		while (current != null)
+		{
+			if (current.getPerson().getName().equals(person.getName()))
+			{
+				current.getPerson().addFriend(targetFriend);
+			}
+
+			current = current.getNext();
+		}
+	}
+
+	public void chainedHashSearch(Node A[], String user, String friend)
+	{
+		Person person = new Person(user, null);
+		Person targetFriend = new Person(friend, null);
+
+		int i = hashCode(person);
+		int j = hashCode(targetFriend);
+
+		boolean found1 = false;
+		boolean found2 = false;
+
+		Node current = A[i];
+		while (current != null)
+		{
+			if (current.getPerson().getName().equals(person.getName()))
+			{
+				if (current.getPerson().searchFriend(targetFriend) == true)
+				{
+					found1 = true;
+				}
+			}
+
+			current = current.getNext();
+		}
+		
+		current = A[j];
+		
+		while (current != null)
+		{
+			if (current.getPerson().getName().equals(targetFriend.getName()))
+			{
+				if (current.getPerson().searchFriend(person) == true)
+				{
+					found2 = true;
+				}
+			}
+
+			current = current.getNext();
+		}
+		
+		if (found1 == true && found2 == true)
+		{
+			System.out.println("Yes.");
+		}
+		else
+		{
+			System.out.println("No.");
+		}
+	}
+
+	public void chainedHashDelete(Node A[], String name, String friend)
+	{
+		Person person = new Person(name, null);
+		Person targetFriend = new Person(friend, null);
+		
+		int i = hashCode(person);
+
+		Node current = A[i];
+		while (current != null)
+		{
+			if (current.getPerson().getName().equals(person.getName()))
+			{
+				current.getPerson().deleteFriend(targetFriend);
+			}
+
+			current = current.getNext();
+		}
+	}
+	
+	public Person findPerson(Node A[], String name)
 	{
 		Person person = new Person(name, null);
 		int i = hashCode(person);
@@ -44,34 +132,6 @@ public class MultiplicationHashFunction {
 		}
 		
 		return null;
-	}
-
-	public void chainedHashDelete(Node A[],Person name)
-	{
-		int i = hashCode(name);
-
-		Node prev = A[i];
-		Node current = A[i].getNext();
-
-		// If there is only one user
-		if (prev.getPerson().getName().equals(name.getName()))
-		{
-			A[i] = current;
-		}
-		
-		else
-		{
-			while (current != null)
-			{
-				if (current.getPerson().getName().equals(name.getName()))
-				{
-					prev.setNext(current.getNext());
-				}
-
-				prev = prev.getNext();
-				current = current.getNext();
-			}
-		}
 	}
 
 	public void print(Node A[])

@@ -4,11 +4,7 @@ public class Person {
 	private LinkedList friendsList;
 	private String name;
 	private int k;
-	
-	public static void main (String args[])
-	{
-	}
-	
+
 	public Person(String name, LinkedList friendsList)
 	{
 		this.name = name;

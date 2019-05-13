@@ -17,7 +17,7 @@ public class Simulator {
 
 		int command = 0;
 
-		while (command != 8)
+		while (command != 7)
 		{
 			// Adding users into the data base
 			if (command == 1)
@@ -34,12 +34,12 @@ public class Simulator {
 						Person p = new Person(user, new LinkedList());
 						Person p2 = new Person(user, new LinkedList());
 						divHashFunction.chainedHashAdd(divHashTable, p);
-						multiHashFunction.chainedHashInsert(multiHashTable, p2);
+						multiHashFunction.chainedHashAdd(multiHashTable, p2);
 					}
 				}
 			}
 
-			if (command == 3)
+			if (command == 2)
 			{
 				System.out.println("Enter 'd' to see the Division Hash Table.");
 				System.out.println("Enter 'm' to see the Multiplication Hash Table.");
@@ -55,38 +55,54 @@ public class Simulator {
 				}
 			}
 
-			if (command == 4)
+			if (command == 3)
 			{
 				System.out.println("Which person would you like to add friends to?");
 				String user1 = scan.next();
 				System.out.println("Who would you like to add?");
 				String user2 = scan.next();
 
-				divHashFunction.chainedHashInsert(divHashTable, user1, user2);
-				divHashFunction.chainedHashInsert(divHashTable, user2, user1);
+				if (divHashFunction.findPerson(divHashTable, user1) != null)
+				{
+					divHashFunction.chainedHashInsert(divHashTable, user1, user2);
+					divHashFunction.chainedHashInsert(divHashTable, user2, user1);
+					divHashFunction.findPerson(divHashTable, user1).printFriendsList();
+					divHashFunction.findPerson(divHashTable, user2).printFriendsList();
+				}
+				else
+				{
+					System.out.println("One of the inputed users does not exist.");
+				}
 			}
 
-			if (command == 5)
+			if (command == 4)
 			{
 				System.out.println("Which person would you like to remove friends from?");
 				String user1 = scan.next();
-				Person temp1 = new Person(user1, null);
 				System.out.println("Who would you like to delete?");
 				String user2 = scan.next();
-				Person temp2 = new Person(user2, null);
-				
-				divHashFunction.chainedHashDelete(divHashTable, temp1, temp2);
-				divHashFunction.findPerson(divHashTable, user1).printFriendsList();
+
+				if (divHashFunction.findPerson(divHashTable, user1) != null)
+				{
+					divHashFunction.chainedHashDelete(divHashTable, user1, user2);
+					divHashFunction.findPerson(divHashTable, user1).printFriendsList();
+					
+					multiHashFunction.chainedHashDelete(multiHashTable, user1, user2);
+				}
+				else
+				{
+					System.out.println("One of the inputed users does not exist.");
+				}
 			}
 
-			if (command == 6)
+			if (command == 5)
 			{
 				System.out.println("Who's friend list would you like to look at?");
 				String user = scan.next();
 				divHashFunction.findPerson(divHashTable, user).printFriendsList();
 			}
 
-			if (command == 7)
+			if (command == 6)
 			{
 				System.out.println("Please enter person 1.");
 				String user1 = scan.next();
@@ -96,6 +112,7 @@ public class Simulator {
 				if (divHashFunction.findPerson(divHashTable, user1) != null && divHashFunction.findPerson(divHashTable, user2) != null)
 				{
 					divHashFunction.chainedHashSearch(divHashTable, user1, user2);
+					multiHashFunction.chainedHashSearch(multiHashTable, user1, user2);
 
 				}
 				else
@@ -109,15 +126,14 @@ public class Simulator {
 			System.out.println("Welcome to the Micro Version of Facebook");
 			System.out.println("----------------------------------------");
 			System.out.println("Press 1 to add users into the data base.");
-			System.out.println("Press 2 to delete users from the data base.");
-			System.out.println("Press 3 to look at the users in the data base.");
+			System.out.println("Press 2 to look at the users in the data base.");
 
-			System.out.println("Press 4 to add friends into a user's friend list.");
-			System.out.println("Press 5 to delete friends from a user's friend list.");
-			System.out.println("Press 6 to look at a user's friend list.");
-			System.out.println("Press 7 to check if two users are friends with each other.");
+			System.out.println("Press 3 to add friends into a user's friend list.");
+			System.out.println("Press 4 to delete friends from a user's friend list.");
+			System.out.println("Press 5 to look at a user's friend list.");
+			System.out.println("Press 6 to check if two users are friends with each other.");
 
-			System.out.println("Press 8 to exit");
+			System.out.println("Press 7 to exit");
 
 			command = scan.nextInt();
 		}

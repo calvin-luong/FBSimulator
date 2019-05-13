@@ -27,17 +27,17 @@ public class DivisionHashFunction {
 
 	public void chainedHashInsert(Node A[], String name, String friend)
 	{
-		Person temp1 = new Person(name, null);
-		Person temp2 = new Person(friend, null);
+		Person person = new Person(name, null);
+		Person targetFriend = new Person(friend, null);
 		
-		int i = hashCode(temp1);
+		int i = hashCode(person);
 
 		Node current = A[i];
 		while (current != null)
 		{
-			if (current.getPerson().getName().equals(temp1.getName()))
+			if (current.getPerson().getName().equals(person.getName()))
 			{
-				current.getPerson().addFriend(temp2);
+				current.getPerson().addFriend(targetFriend);
 			}
 
 			current = current.getNext();
@@ -94,16 +94,19 @@ public class DivisionHashFunction {
 		}
 	}
 
-	public void chainedHashDelete(Node A[], Person name, Person friend)
+	public void chainedHashDelete(Node A[], String name, String friend)
 	{
-		int i = hashCode(name);
+		Person person = new Person(name, null);
+		Person targetFriend = new Person(friend, null);
+		
+		int i = hashCode(person);
 
 		Node current = A[i];
 		while (current != null)
 		{
-			if (current.getPerson().getName().equals(name.getName()))
+			if (current.getPerson().getName().equals(person.getName()))
 			{
-				current.getPerson().deleteFriend(friend);
+				current.getPerson().deleteFriend(targetFriend);
 			}
 
 			current = current.getNext();

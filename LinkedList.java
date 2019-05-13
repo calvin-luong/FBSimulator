@@ -79,22 +79,4 @@ public class LinkedList {
 			current = current.getNext();
 		}
 	}
-
-	public static void main (String args[])
-	{
-		LinkedList list = new LinkedList();
-
-		Person p1 = new Person("Jasmine", new LinkedList());
-		Person p2 = new Person("Calvin", new LinkedList());
-		Person p3 = new Person("Ashley", new LinkedList());
-
-		list.insert(p1);
-		list.insert(p2);
-		list.insert(p3);
-
-		list.print();
-		
-		list.delete(p3);
-		list.print();
-	}
 }
