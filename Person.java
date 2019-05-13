@@ -43,6 +43,16 @@ public class Person {
 		friendsList.insert(p);
 	}
 	
+	public void deleteFriend(Person p)
+	{
+		friendsList.delete(p);
+	}
+	
+	public boolean searchFriend(Person p)
+	{
+		return friendsList.findNode(p);
+	}
+	
 	public void printFriendsList()
 	{
 		System.out.print(name + "'s friends: ");

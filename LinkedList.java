@@ -50,7 +50,7 @@ public class LinkedList {
 
 		if (current.getPerson().getName().equals(n.getPerson().getName()))
 		{
-			current = null;
+			head = current.getNext();
 		}
 
 		else
@@ -92,6 +92,9 @@ public class LinkedList {
 		list.insert(p2);
 		list.insert(p3);
 
+		list.print();
+		
+		list.delete(p3);
 		list.print();
 	}
 }
