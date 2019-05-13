@@ -32,25 +32,10 @@ public class Simulator {
 					if (!user.equals("q"))
 					{
 						Person p = new Person(user, new LinkedList());
-						divHashFunction.chainedHashInsert(divHashTable, p);
-						multiHashFunction.chainedHashInsert(multiHashTable, p);
+						Person p2 = new Person(user, new LinkedList());
+						divHashFunction.chainedHashAdd(divHashTable, p);
+						multiHashFunction.chainedHashInsert(multiHashTable, p2);
 					}
-				}
-			}
-
-			if (command == 2)
-			{
-				System.out.println("Which user would you like to delete?");
-				String user = scan.next();
-
-				if (divHashFunction.chainedHashSearch(divHashTable, user) != null)
-				{
-					divHashFunction.chainedHashDelete(divHashTable, divHashFunction.chainedHashSearch(divHashTable, user));
-					multiHashFunction.chainedHashDelete(multiHashTable, multiHashFunction.chainedHashSearch(multiHashTable, user));
-				}
-				else
-				{
-					System.out.println("No such user exists.");
 				}
 			}
 
@@ -77,14 +62,8 @@ public class Simulator {
 				System.out.println("Who would you like to add?");
 				String user2 = scan.next();
 
-				divHashFunction.chainedHashSearch(divHashTable, user1).addFriend(divHashFunction.chainedHashSearch(divHashTable, user2));
-				divHashFunction.chainedHashSearch(divHashTable, user2).addFriend(divHashFunction.chainedHashSearch(divHashTable, user1));
-				
-				multiHashFunction.chainedHashSearch(multiHashTable, user1).addFriend(multiHashFunction.chainedHashSearch(multiHashTable, user2));
-				multiHashFunction.chainedHashSearch(multiHashTable, user2).addFriend(multiHashFunction.chainedHashSearch(multiHashTable, user1));
-
-				divHashFunction.chainedHashSearch(divHashTable, user1).printFriendsList();
-				divHashFunction.chainedHashSearch(divHashTable, user2).printFriendsList();
+				divHashFunction.chainedHashInsert(divHashTable, user1, user2);
+				divHashFunction.chainedHashInsert(divHashTable, user2, user1);
 			}
 
 			if (command == 5)
@@ -92,47 +71,31 @@ public class Simulator {
 				System.out.println("Which person would you like to remove friends from?");
 				String user1 = scan.next();
 				Person temp1 = new Person(user1, null);
-				divHashFunction.chainedHashSearch(divHashTable, user1).printFriendsList();
 				System.out.println("Who would you like to delete?");
 				String user2 = scan.next();
 				Person temp2 = new Person(user2, null);
-
-				divHashFunction.chainedHashSearch(divHashTable, user1).deleteFriend(temp2);
-				divHashFunction.chainedHashSearch(divHashTable, user2).deleteFriend(temp1);
-
-				divHashFunction.chainedHashSearch(divHashTable, user1).printFriendsList();
-				divHashFunction.chainedHashSearch(divHashTable, user2).printFriendsList();
+				
+				divHashFunction.chainedHashDelete(divHashTable, temp1, temp2);
+				divHashFunction.findPerson(divHashTable, user1).printFriendsList();
 			}
 
 			if (command == 6)
 			{
 				System.out.println("Who's friend list would you like to look at?");
 				String user = scan.next();
-				divHashFunction.chainedHashSearch(divHashTable, user).printFriendsList();
+				divHashFunction.findPerson(divHashTable, user).printFriendsList();
 			}
 
 			if (command == 7)
 			{
 				System.out.println("Please enter person 1.");
 				String user1 = scan.next();
-				Person temp1 = new Person(user1, null);
 				System.out.println("Please enter person 2.");
 				String user2 = scan.next(); 
-				Person temp2 = new Person(user2, null);
 
-				if (divHashFunction.chainedHashSearch(divHashTable, user1) != null && divHashFunction.chainedHashSearch(divHashTable, user2) != null)
+				if (divHashFunction.findPerson(divHashTable, user1) != null && divHashFunction.findPerson(divHashTable, user2) != null)
 				{
-					boolean found1 = divHashFunction.chainedHashSearch(divHashTable, user1).searchFriend(temp2);
-					boolean found2 = divHashFunction.chainedHashSearch(divHashTable, user2).searchFriend(temp1);
-
-					if (found1 == true && found2 == true)
-					{
-						System.out.println("Yes");
-					}
-					else
-					{
-						System.out.println("No");
-					}
+					divHashFunction.chainedHashSearch(divHashTable, user1, user2);
 
 				}
 				else

@@ -7,7 +7,7 @@ public class DivisionHashFunction {
 		return name.getK() % 13;
 	}
 
-	public void chainedHashInsert(Node A[], Person name)
+	public void chainedHashAdd(Node A[], Person name)
 	{
 		Node person = new Node(name);
 
@@ -25,7 +25,92 @@ public class DivisionHashFunction {
 		}
 	}
 
-	public Person chainedHashSearch(Node A[], String name)
+	public void chainedHashInsert(Node A[], String name, String friend)
+	{
+		Person temp1 = new Person(name, null);
+		Person temp2 = new Person(friend, null);
+		
+		int i = hashCode(temp1);
+
+		Node current = A[i];
+		while (current != null)
+		{
+			if (current.getPerson().getName().equals(temp1.getName()))
+			{
+				current.getPerson().addFriend(temp2);
+			}
+
+			current = current.getNext();
+		}
+	}
+
+	public void chainedHashSearch(Node A[], String user, String friend)
+	{
+		Person person = new Person(user, null);
+		Person targetFriend = new Person(friend, null);
+
+		int i = hashCode(person);
+		int j = hashCode(targetFriend);
+
+		boolean found1 = false;
+		boolean found2 = false;
+
+		Node current = A[i];
+		while (current != null)
+		{
+			if (current.getPerson().getName().equals(person.getName()))
+			{
+				if (current.getPerson().searchFriend(targetFriend) == true)
+				{
+					found1 = true;
+				}
+			}
+
+			current = current.getNext();
+		}
+		
+		current = A[j];
+		
+		while (current != null)
+		{
+			if (current.getPerson().getName().equals(targetFriend.getName()))
+			{
+				if (current.getPerson().searchFriend(person) == true)
+				{
+					found2 = true;
+				}
+			}
+
+			current = current.getNext();
+		}
+		
+		if (found1 == true && found2 == true)
+		{
+			System.out.println("Yes.");
+		}
+		else
+		{
+			System.out.println("No.");
+		}
+	}
+
+	public void chainedHashDelete(Node A[], Person name, Person friend)
+	{
+		int i = hashCode(name);
+
+		Node current = A[i];
+		while (current != null)
+		{
+			if (current.getPerson().getName().equals(name.getName()))
+			{
+				current.getPerson().deleteFriend(friend);
+			}
+
+			current = current.getNext();
+		}
+	}
+	
+	public Person findPerson(Node A[], String name)
 	{
 		Person person = new Person(name, null);
 		int i = hashCode(person);
@@ -40,36 +125,8 @@ public class DivisionHashFunction {
 
 			current = current.getNext();
 		}
-
-		return null;
-	}
-
-	public void chainedHashDelete(Node A[],Person name)
-	{
-		int i = hashCode(name);
-
-		Node prev = A[i];
-		Node current = A[i].getNext();
-
-		// If there is only one user
-		if (prev.getPerson().getName().equals(name.getName()))
-		{
-			A[i] = current;
-		}
 		
-		else
-		{
-			while (current != null)
-			{
-				if (current.getPerson().getName().equals(name.getName()))
-				{
-					prev.setNext(current.getNext());
-				}
-
-				prev = prev.getNext();
-				current = current.getNext();
-			}
-		}
+		return null;
 	}
 
 	public void print(Node A[])
@@ -88,30 +145,5 @@ public class DivisionHashFunction {
 
 			System.out.println();
 		}
-	}
-	
-	public static void main(String args[])
-	{
-		DivisionHashFunction divHashFunction = new DivisionHashFunction();
-		Node divHashTable[] = new Node[13];
-		Person p1 = new Person("calvin", null);
-		Person p2 = new Person("jasmine", null);
-		Person p3 = new Person("calvin", null);
-		Person p4 = new Person(")", null);
-		Person p5 = new Person("jasmine", null);
-		
-		divHashFunction.chainedHashInsert(divHashTable, p1);
-		divHashFunction.chainedHashInsert(divHashTable, p2);
-		//divHashFunction.chainedHashInsert(divHashTable, p3);
-		divHashFunction.chainedHashInsert(divHashTable, p4);
-		divHashFunction.chainedHashInsert(divHashTable, p5);
-		
-		divHashFunction.print(divHashTable);
-		
-		divHashFunction.chainedHashDelete(divHashTable, p1);
-		divHashFunction.chainedHashDelete(divHashTable, p4);
-		
-		divHashFunction.print(divHashTable);
-		
 	}
 }
